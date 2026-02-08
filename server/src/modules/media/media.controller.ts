@@ -4,7 +4,7 @@ import { sendSuccess, sendPaginated } from '../../utils/response.js';
 import { AuthRequest } from '../../middlewares/auth.js';
 import { uploadSingle } from '../../middlewares/upload.js';
 import { parseQueryInt } from '../../utils/helpers.js';
-import { v2 as cloudinary } from 'cloudinary';
+import { v2 as cloudinary, UploadApiResponse, UploadApiErrorResponse } from 'cloudinary';
 
 // ============================================================================
 // Cloudinary Configuration
@@ -47,7 +47,7 @@ async function uploadToCloudinary(buffer: Buffer, filename: string): Promise<{
 
     const uploadStream = cloudinary.uploader.upload_stream(
       uploadOptions,
-      (error, result) => {
+      (error: UploadApiErrorResponse | undefined, result: UploadApiResponse | undefined) => {
         if (error) {
           reject(new Error(error.message || 'Cloudinary upload failed'));
         } else if (result) {
@@ -84,7 +84,7 @@ async function uploadUrlToCloudinary(url: string): Promise<{
       access_mode: 'public' as const,
     };
 
-    cloudinary.uploader.upload(url, uploadOptions, (error, result) => {
+    cloudinary.uploader.upload(url, uploadOptions, (error: UploadApiErrorResponse | undefined, result: UploadApiResponse | undefined) => {
       if (error) {
         reject(new Error(error.message || 'Cloudinary upload failed'));
       } else if (result) {
