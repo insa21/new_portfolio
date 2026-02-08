@@ -27,18 +27,9 @@ app.use(helmet({
   crossOriginResourcePolicy: { policy: 'cross-origin' },
 }));
 
-// CORS - Support multiple origins (comma-separated in CORS_ORIGIN)
-const allowedOrigins = env.CORS_ORIGIN.split(',').map(o => o.trim());
+// CORS
 app.use(cors({
-  origin: (origin, callback) => {
-    // Allow requests with no origin (mobile apps, curl, etc)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: env.CORS_ORIGIN,
   credentials: true,
 }));
 

@@ -7,9 +7,7 @@ import { env } from '../../config/env.js';
 const COOKIE_OPTIONS = {
   httpOnly: true,
   secure: env.IS_PRODUCTION,
-  // Use 'none' for cross-origin production (frontend/backend on different domains)
-  // Use 'lax' for development (same origin)
-  sameSite: env.IS_PRODUCTION ? ('none' as const) : ('lax' as const),
+  sameSite: env.IS_PRODUCTION ? ('strict' as const) : ('lax' as const),
   path: '/',
 };
 
