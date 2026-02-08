@@ -1,0 +1,276 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ========== AUTH & USERS ==========
+enum UserRole {
+  ADMIN
+  EDITOR
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  password     String
+  name         String
+  avatar       String?
+  role         UserRole @default(EDITOR)
+  refreshToken String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  posts     BlogPost[]
+  auditLogs AuditLog[]
+
+  @@map("users")
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  action    String // CREATE, UPDATE, DELETE
+  entity    String // projects, posts, etc
+  entityId  String
+  oldValue  Json?
+  newValue  Json?
+  createdAt DateTime @default(now())
+
+  @@index([entity, entityId])
+  @@index([userId])
+  @@map("audit_logs")
+}
+
+// ========== PROJECTS ==========
+enum ProjectStatus {
+  LIVE
+  IN_PROGRESS
+  ARCHIVED
+}
+
+model Project {
+  id           String        @id @default(cuid())
+  title        String
+  slug         String        @unique
+  tagline      String
+  description  String        @db.Text
+  type         String // Web App, Mobile, Open Source
+  featured     Boolean       @default(false)
+  status       ProjectStatus @default(IN_PROGRESS)
+  year         String
+  stack        String[]
+  thumbnailUrl String?
+  previewType  String        @default("image")
+  liveUrl      String?
+  repoUrl      String?
+  caseStudyUrl String?
+  stars        Int?
+  views        Int?
+  highlights   String[]
+  challenges   String?       @db.Text
+  results      String?       @db.Text
+  publishedAt  DateTime?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  tags ProjectTag[]
+
+  @@index([featured])
+  @@index([status])
+  @@map("projects")
+}
+
+model ProjectTag {
+  id        String  @id @default(cuid())
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  tag       String
+
+  @@unique([projectId, tag])
+  @@index([tag])
+  @@map("project_tags")
+}
+
+// ========== EXPERIMENTS ==========
+model Experiment {
+  id          String   @id @default(cuid())
+  title       String
+  description String   @db.Text
+  tags        String[]
+  date        String
+  previewUrl  String?
+  repoUrl     String?
+  demoUrl     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("experiments")
+}
+
+// ========== BLOG ==========
+model BlogCategory {
+  id    String     @id @default(cuid())
+  name  String     @unique
+  slug  String     @unique
+  posts BlogPost[]
+
+  @@map("blog_categories")
+}
+
+model BlogPost {
+  id          String       @id @default(cuid())
+  title       String
+  slug        String       @unique
+  excerpt     String       @db.Text
+  content     String       @db.Text
+  coverUrl    String?
+  categoryId  String
+  category    BlogCategory @relation(fields: [categoryId], references: [id])
+  authorId    String
+  author      User         @relation(fields: [authorId], references: [id])
+  tags        String[]
+  readTime    String?
+  views       Int          @default(0)
+  featured    Boolean      @default(false)
+  published   Boolean      @default(false)
+  publishedAt DateTime?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  // SEO fields
+  metaTitle       String?
+  metaDescription String?
+  ogImage         String?
+
+  @@index([categoryId])
+  @@index([authorId])
+  @@index([featured])
+  @@index([published])
+  @@map("blog_posts")
+}
+
+// ========== CERTIFICATIONS ==========
+enum CredentialType {
+  LICENSE
+  CERTIFICATION
+}
+
+model Certification {
+  id            String         @id @default(cuid())
+  title         String
+  type          CredentialType @default(CERTIFICATION)
+  issuer        String
+  issuerLogo    String?
+  category      String
+  skills        String[]
+  issuedAt      String
+  expiresAt     String?
+  credentialId  String?
+  credentialUrl String?
+  pdfUrl        String?
+  featured      Boolean        @default(false)
+  description   String?        @db.Text
+  previewUrl    String?
+  previewType   String         @default("image")
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  @@index([featured])
+  @@index([category])
+  @@map("certifications")
+}
+
+// ========== SERVICES ==========
+model Service {
+  id           String   @id @default(cuid())
+  title        String
+  description  String   @db.Text
+  bestFor      String
+  deliverables String[]
+  process      String[]
+  order        Int      @default(0)
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("services")
+}
+
+// ========== CASE STUDIES ==========
+model CaseStudy {
+  id           String   @id @default(cuid())
+  title        String
+  slug         String   @unique
+  heroImage    String?
+  problem      String   @db.Text
+  solution     String   @db.Text
+  role         String
+  timeline     String
+  aiFlowInput  String?
+  aiFlowModel  String?
+  aiFlowOutput String?
+  architecture String[]
+  challenges   String[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  results CaseStudyResult[]
+
+  @@map("case_studies")
+}
+
+model CaseStudyResult {
+  id          String    @id @default(cuid())
+  caseStudyId String
+  caseStudy   CaseStudy @relation(fields: [caseStudyId], references: [id], onDelete: Cascade)
+  metric      String
+  value       String
+
+  @@map("case_study_results")
+}
+
+// ========== MEDIA ==========
+model Media {
+  id           String   @id @default(cuid())
+  filename     String
+  mimetype     String
+  size         Int
+  url          String
+  alt          String?
+  // Cloudinary metadata
+  publicId     String?
+  resourceType String?
+  format       String?
+  bytes        Int?
+  createdAt    DateTime @default(now())
+
+  @@map("media")
+}
+
+// ========== SETTINGS ==========
+model Setting {
+  id    String @id @default(cuid())
+  key   String @unique
+  value Json
+
+  @@map("settings")
+}
+
+// ========== CONTACT SUBMISSIONS ==========
+model ContactSubmission {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String
+  message   String   @db.Text
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([read])
+  @@map("contact_submissions")
+}

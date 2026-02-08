@@ -1,0 +1,552 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-highlight: var(--surface-highlight);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  /* Fonts */
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-space-grotesk);
+  --font-serif: var(--font-instrument-serif);
+
+  /* Animations */
+  --animate-fade-in: fade-in 0.6s ease-out;
+  --animate-fade-up: fade-up 0.8s ease-out;
+  --animate-scale-in: scale-in 0.5s ease-out;
+  
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scale-in {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes shimmer {
+    100% { transform: translateX(100%); }
+  }
+}
+
+/* =============================================
+   BACKGROUND ENGINE - Premium Technology Layers
+   ============================================= */
+
+/* CSS Variables (defaults - overridden by BackgroundEngine component) */
+:root {
+  --bg-grid-opacity: 0.03;
+  --bg-dot-opacity: 0;
+  --bg-noise-opacity: 0.02;
+  --bg-glow-1: rgba(13, 148, 136, 0.12);
+  --bg-glow-2: rgba(20, 184, 166, 0.08);
+  --bg-glow-3: transparent;
+  --bg-glow-pos-1: 30% 0%;
+  --bg-glow-pos-2: 70% 100%;
+  --bg-glow-pos-3: 50% 50%;
+  --bg-glow-size-1: 600px 400px;
+  --bg-glow-size-2: 500px 350px;
+  --bg-glow-size-3: 400px 300px;
+  --bg-has-glow-3: 0;
+}
+
+.dark {
+  --bg-glow-1: rgba(45, 212, 191, 0.1);
+  --bg-glow-2: rgba(20, 184, 166, 0.06);
+}
+
+/* Background Engine Wrapper */
+.bg-engine-wrapper {
+  position: relative;
+  min-height: 100vh;
+  isolation: isolate;
+}
+
+/* Background Layer Container */
+.bg-engine-layer {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Grid Pattern via ::before */
+.bg-engine-layer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(to right, var(--border) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+  background-size: 60px 60px;
+  opacity: var(--bg-grid-opacity, 0.03);
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 20%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 20%, transparent 100%);
+}
+
+/* Dot Pattern - Additional absolute positioned element */
+.bg-engine-layer .bg-dots {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at center, var(--muted-foreground) 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: var(--bg-dot-opacity, 0);
+}
+
+/* Glow Radials via ::after - Supports up to 3 glows */
+.bg-engine-layer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(
+      ellipse var(--bg-glow-size-1, 600px 400px) at var(--bg-glow-pos-1, 30% 0%), 
+      var(--bg-glow-1, rgba(13, 148, 136, 0.12)), 
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse var(--bg-glow-size-2, 500px 350px) at var(--bg-glow-pos-2, 70% 100%), 
+      var(--bg-glow-2, rgba(20, 184, 166, 0.08)), 
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse var(--bg-glow-size-3, 400px 300px) at var(--bg-glow-pos-3, 50% 50%), 
+      var(--bg-glow-3, transparent), 
+      transparent 70%
+    );
+  opacity: 1;
+  transition: all 0.5s ease;
+}
+
+/* =============================================
+   LIGHT MODE - Modern Premium Design System
+   ============================================= */
+
+:root {
+  /* Base Colors - Neural & Tinted */
+  --background: #f9fafb;           /* Gray 50 - Warm Off-white Base */
+  --foreground: #111827;           /* Gray 900 - Sharp Text */
+
+  /* Surfaces */
+  --surface: #ffffff;              /* Pure White - Cards & Panels */
+  --surface-highlight: #f3f4f6;    /* Gray 100 - Hover/Active */
+  --surface-alt: #f9fafb;          /* Gray 50 - Alternative Backgrounds */
+
+  /* Borders & Inputs */
+  --border: #e5e7eb;               /* Gray 200 - Subtle definition */
+  --border-light: #f3f4f6;         /* Gray 100 - Very subtle */
+  --input: #ffffff;                /* Input background */
+  --input-border: #d1d5db;         /* Gray 300 - Standard input border */
+  --input-focus: #0d9488;          /* Teal 600 - Focus ring */
+
+  /* Focus & Ring */
+  --ring: #0d9488;                 /* Teal 600 */
+
+  /* Primary Action */
+  --primary: #111827;              /* Gray 900 - Primary Buttons */
+  --primary-foreground: #ffffff;
+
+  /* Secondary */
+  --secondary: #f3f4f6;            /* Gray 100 - Secondary Buttons/Backgrounds */
+  --secondary-foreground: #1f2937;
+
+  /* Muted */
+  --muted: #f3f4f6;                /* Gray 100 */
+  --muted-foreground: #6b7280;     /* Gray 500 - Secondary Text */
+
+  /* Accent */
+  --accent: #0d9488;               /* Teal 600 - Brand Color */
+  --accent-hover: #0f766e;         /* Teal 700 */
+  --accent-light: #f0fdfa;         /* Teal 50 - Subtle Tint */
+  --accent-foreground: #ffffff;
+
+  /* Semantic */
+  --destructive: #ef4444;          /* Red 500 */
+  --destructive-light: #fef2f2;    /* Red 50 */
+  --destructive-foreground: #ffffff;
+  --success: #10b981;              /* Emerald 500 */
+  --success-light: #ecfdf5;        /* Emerald 50 */
+  --warning: #f59e0b;              /* Amber 500 */
+  --warning-light: #fffbeb;        /* Amber 50 */
+
+  /* Shadows - Layered & Diffused */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+  
+  /* Border Radius */
+  --radius: 0.75rem;
+  --radius-sm: 0.5rem;
+  --radius-lg: 1rem;
+  
+  /* Spacing Scale (8px base) */
+  --space-1: 0.25rem;  /* 4px */
+  --space-2: 0.5rem;   /* 8px */
+  --space-3: 0.75rem;  /* 12px */
+  --space-4: 1rem;     /* 16px */
+  --space-6: 1.5rem;   /* 24px */
+  --space-8: 2rem;     /* 32px */
+  --space-12: 3rem;    /* 48px */
+  --space-16: 4rem;    /* 64px */
+}
+
+/* =============================================
+   DARK MODE - Preserved
+   ============================================= */
+
+.dark {
+  --background: #030304;
+  --foreground: #f2f2f2;
+  --surface: #0a0a0b;
+  --surface-highlight: #141415;
+  --surface-alt: #0f0f10;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-light: rgba(255, 255, 255, 0.04);
+  --input: #1a1a1c;
+  --input-border: rgba(255, 255, 255, 0.12);
+  --ring: #2dd4bf;
+  --primary: #ededed;
+  --primary-foreground: #09090b;
+  --secondary: #1a1a1c;
+  --secondary-foreground: #fafafa;
+  --muted: #1a1a1c;
+  --muted-foreground: #a1a1aa;
+  --accent: #2dd4bf;
+  --accent-hover: #5eead4;
+  --accent-light: rgba(45, 212, 191, 0.1);
+  --accent-foreground: #000000;
+  --destructive-light: rgba(220, 38, 38, 0.15);
+  --success-light: rgba(22, 163, 74, 0.15);
+  --warning-light: rgba(217, 119, 6, 0.15);
+  
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.4), 0 4px 6px rgba(0, 0, 0, 0.3);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.5), 0 8px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* =============================================
+   BASE STYLES
+   ============================================= */
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+}
+
+/* =============================================
+   TYPOGRAPHY - Modern Hierarchy
+   ============================================= */
+
+.prose-modern {
+  /* Headings */
+  & h1, & h2, & h3, & h4 {
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-weight: 600;
+    color: var(--foreground);
+    letter-spacing: -0.02em;
+  }
+  
+  & h1 { font-size: 2.5rem; line-height: 1.2; margin-bottom: var(--space-6); }
+  & h2 { font-size: 1.875rem; line-height: 1.3; margin-bottom: var(--space-4); }
+  & h3 { font-size: 1.25rem; line-height: 1.4; margin-bottom: var(--space-3); }
+  & h4 { font-size: 1rem; line-height: 1.5; margin-bottom: var(--space-2); }
+  
+  /* Body Text */
+  & p {
+    color: var(--foreground);
+    margin-bottom: var(--space-4);
+    line-height: 1.7;
+  }
+  
+  /* Muted Text */
+  & .text-muted {
+    color: var(--muted-foreground);
+  }
+}
+
+/* =============================================
+   CARD SYSTEM - Modern Elevation
+   ============================================= */
+
+.card-modern {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+}
+
+.card-modern:hover {
+  box-shadow: var(--shadow-md);
+  border-color: color-mix(in srgb, var(--accent) 20%, var(--border));
+  transform: translateY(-2px);
+}
+
+/* Flat card - no elevation, just border */
+.card-flat {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: border-color 0.2s ease;
+}
+
+.card-flat:hover {
+  border-color: var(--accent);
+}
+
+/* Subtle card - very light background */
+.card-subtle {
+  background: var(--surface-alt);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  transition: all 0.2s ease;
+}
+
+/* Glass panel for overlays */
+.glass-panel {
+  background: color-mix(in srgb, var(--surface) 85%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+}
+
+/* =============================================
+   FORM INPUTS - Clean & Accessible
+   ============================================= */
+
+.input-modern {
+  height: 2.75rem;
+  padding: 0.625rem 0.875rem;
+  background: var(--input);
+  border: 1px solid var(--input-border);
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  color: var(--foreground);
+  transition: all 0.15s ease;
+  width: 100%;
+}
+
+.input-modern:hover {
+  border-color: var(--muted-foreground);
+}
+
+.input-modern:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+.input-modern::placeholder {
+  color: var(--muted-foreground);
+  opacity: 0.8;
+}
+
+.input-modern:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--muted);
+}
+
+/* Input with error state */
+.input-error {
+  border-color: var(--destructive);
+  background: var(--destructive-light);
+}
+
+.input-error:focus {
+  border-color: var(--destructive);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 12%, transparent);
+}
+
+/* Error helper text */
+.error-text {
+  color: var(--destructive);
+  font-size: 0.75rem;
+  margin-top: var(--space-1);
+}
+
+/* =============================================
+   SECTION DIVIDERS - Visual Separation
+   ============================================= */
+
+.section-divider {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--border) 20%,
+    var(--border) 80%,
+    transparent
+  );
+  margin: var(--space-12) 0;
+}
+
+.section-alt {
+  background: var(--surface-alt);
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+}
+
+/* =============================================
+   VISUAL UTILITIES
+   ============================================= */
+
+/* Grain overlay */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 50;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Focus ring utility */
+.focus-ring {
+  outline: none;
+}
+
+.focus-ring:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* Smooth transitions utility */
+.transition-smooth {
+  transition: all 0.2s ease;
+}
+
+/* =============================================
+   SCROLLBAR - Hidden but Functional
+   ============================================= */
+
+html {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* =============================================
+   MARQUEE ANIMATIONS
+   ============================================= */
+
+@keyframes marquee-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-right {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+.animate-marquee-left {
+  animation: marquee-left var(--marquee-duration, 40s) linear infinite;
+}
+
+.animate-marquee-right {
+  animation: marquee-right var(--marquee-duration, 40s) linear infinite;
+}
+
+.marquee-pause-on-hover:hover .animate-marquee-left,
+.marquee-pause-on-hover:hover .animate-marquee-right {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee-left,
+  .animate-marquee-right {
+    animation: none;
+  }
+}
+
+/* =============================================
+   LEGACY SUPPORT (for existing components)
+   ============================================= */
+
+/* Backwards compatible with existing utilities */
+.card-elevated {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  border-radius: var(--radius);
+  transition: all 0.2s ease;
+}
+
+.card-elevated:hover {
+  box-shadow: var(--shadow-md);
+  border-color: color-mix(in srgb, var(--accent) 20%, var(--border));
+  transform: translateY(-2px);
+}
+
+.input-base {
+  height: 2.75rem;
+  padding: 0.625rem 0.875rem;
+  background: var(--input);
+  border: 1px solid var(--input-border);
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  color: var(--foreground);
+  transition: all 0.15s ease;
+}
+
+.input-base:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+.input-base::placeholder {
+  color: var(--muted-foreground);
+  opacity: 0.8;
+}
+
+.input-base:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--muted);
+}

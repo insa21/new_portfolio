@@ -1,0 +1,35 @@
+# Dependencies
+node_modules
+
+# Build output
+dist
+
+node_modules/*
+
+# Environment variables (NEVER commit!)
+.env
+.env.local
+.env.*.local
+
+# Uploads (keep directory structure)
+uploads/*
+!uploads/.gitkeep
+
+# Database backups
+*.dump
+*.sql
+*.backup
+
+# Logs
+*.log
+npm-debug.log*
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
