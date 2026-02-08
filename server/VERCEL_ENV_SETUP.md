@@ -12,8 +12,8 @@ Konfigurasi environment variables berikut WAJIB di-set di Vercel Dashboard untuk
 ### JWT (⚠️ SECURITY CRITICAL)
 | Variable | Contoh Value | Keterangan |
 |----------|-------------|------------|
-| `JWT_SECRET` | `random-32-chars-string-here` | **WAJIB GANTI!** Generate random string |
-| `JWT_REFRESH_SECRET` | `another-random-32-chars-string` | **WAJIB GANTI!** Generate random string |
+| `JWT_SECRET` | `d468af23ffae132b2d73cd89212b7b6a` | **WAJIB GANTI!** Generate random string |
+| `JWT_REFRESH_SECRET` | `5357443e43695c7f7783e0cfe8eb5cfe` | **WAJIB GANTI!** Generate random string |
 | `ACCESS_TOKEN_EXPIRES` | `15m` | Token expires in 15 minutes |
 | `REFRESH_TOKEN_EXPIRES` | `7d` | Refresh token expires in 7 days |
 
