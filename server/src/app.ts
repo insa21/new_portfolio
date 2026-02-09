@@ -27,9 +27,9 @@ app.use(helmet({
   crossOriginResourcePolicy: { policy: 'cross-origin' },
 }));
 
-// CORS
+// CORS - handle multiple origins from comma-separated env var
 app.use(cors({
-  origin: env.CORS_ORIGIN,
+  origin: env.CORS_ORIGIN.split(',').map(o => o.trim()),
   credentials: true,
 }));
 
