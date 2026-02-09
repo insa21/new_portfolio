@@ -137,7 +137,7 @@ export class ProjectsService {
 
     return {
       ...project,
-      tags: project.tags.map((t) => t.tag),
+      tags: project.tags.map((t: { tag: string }) => t.tag),
     };
   }
 
@@ -161,7 +161,7 @@ export class ProjectsService {
     }
 
     // Update project and tags in transaction
-    const project = await prisma.$transaction(async (tx) => {
+    const project = await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
       // Delete existing tags if new tags provided
       if (tags) {
         await tx.projectTag.deleteMany({
@@ -192,7 +192,7 @@ export class ProjectsService {
 
     return {
       ...project,
-      tags: project.tags.map((t) => t.tag),
+      tags: project.tags.map((t: { tag: string }) => t.tag),
     };
   }
 
