@@ -58,7 +58,7 @@ export class ProjectsService {
     // Transform tags
     const transformedProjects = projects.map((p) => ({
       ...p,
-      tags: p.tags.map((t) => t.tag),
+      tags: p.tags.map((t: { tag: string }) => t.tag),
     }));
 
     return { projects: transformedProjects, total, page, limit };
@@ -80,7 +80,7 @@ export class ProjectsService {
 
     return {
       ...project,
-      tags: project.tags.map((t) => t.tag),
+      tags: project.tags.map((t: { tag: string }) => t.tag),
     };
   }
 
@@ -100,7 +100,7 @@ export class ProjectsService {
 
     return {
       ...project,
-      tags: project.tags.map((t) => t.tag),
+      tags: project.tags.map((t: { tag: string }) => t.tag),
     };
   }
 
