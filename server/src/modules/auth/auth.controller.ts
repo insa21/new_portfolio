@@ -6,9 +6,14 @@ import { env } from '../../config/env.js';
 
 const COOKIE_OPTIONS = {
   httpOnly: true,
+  // Always use secure in production (required for sameSite: 'none')
   secure: env.IS_PRODUCTION,
-  sameSite: env.IS_PRODUCTION ? ('strict' as const) : ('lax' as const),
+  // Use 'none' for cross-domain cookie support (frontend and backend on different domains)
+  // 'none' allows cookies to be sent in third-party contexts but requires secure: true
+  sameSite: env.IS_PRODUCTION ? ('none' as const) : ('lax' as const),
   path: '/',
+  // Don't set domain - let browser default to the origin domain
+  // This ensures cookies work correctly in cross-domain scenarios
 };
 
 export class AuthController {
