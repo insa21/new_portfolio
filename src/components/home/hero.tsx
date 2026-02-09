@@ -145,16 +145,16 @@ export function Hero() {
   const getButtonVariant = (variant: string | undefined) => {
     switch (variant) {
       case 'primary':
-        return "rounded-full px-8 py-6 text-base shadow-[0_0_20px_rgba(0,207,200,0.15)] hover:shadow-[0_0_30px_rgba(0,207,200,0.25)] transition-shadow duration-300";
+        return "rounded-full px-5 py-3 sm:px-6 sm:py-4 md:px-8 md:py-6 text-sm sm:text-base shadow-[0_0_20px_rgba(0,207,200,0.15)] hover:shadow-[0_0_30px_rgba(0,207,200,0.25)] transition-shadow duration-300";
       case 'secondary':
       case 'outline':
       default:
-        return "rounded-full px-8 py-6 text-base bg-white/5 border-white/10 hover:bg-white/10 backdrop-blur-sm";
+        return "rounded-full px-5 py-3 sm:px-6 sm:py-4 md:px-8 md:py-6 text-sm sm:text-base bg-white/5 border-white/10 hover:bg-white/10 backdrop-blur-sm";
     }
   };
 
   return (
-    <section className="relative min-h-screen flex items-center pt-28 lg:pt-32 pb-16 overflow-hidden">
+    <section className="relative min-h-screen flex items-center pt-20 sm:pt-24 lg:pt-32 pb-10 sm:pb-16 overflow-hidden">
       {/* 3D Scene Container */}
       <div className="absolute inset-0 z-0 pointer-events-none lg:left-1/2 lg:w-1/2">
         <Scene />
@@ -202,7 +202,7 @@ export function Hero() {
             {/* Headline */}
             <motion.h1
               variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { type: "spring", damping: 30 } } }}
-              className="text-6xl md:text-7xl lg:text-8xl font-display font-bold tracking-tighter mb-8 leading-[1.05]"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-display font-bold tracking-tighter mb-6 sm:mb-8 leading-[1.1] sm:leading-[1.05]"
             >
               {firstLine}
               <br />
@@ -214,7 +214,7 @@ export function Hero() {
             {/* Description */}
             <motion.p
               variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-              className="text-lg md:text-xl text-muted-foreground/90 max-w-xl md:max-w-2xl mb-10 leading-relaxed font-light"
+              className="text-base sm:text-lg md:text-xl text-muted-foreground/90 max-w-sm sm:max-w-xl md:max-w-2xl mb-8 sm:mb-10 leading-relaxed font-light"
             >
               {settings.hero?.subtitle || 'Expertly crafting scalable web architectures and AI-driven solutions.'}
             </motion.p>
@@ -222,7 +222,7 @@ export function Hero() {
             {/* CTA Buttons */}
             <motion.div
               variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-              className="flex flex-wrap gap-4 items-center justify-center lg:justify-start mb-16"
+              className="flex flex-wrap gap-3 sm:gap-4 items-center justify-center lg:justify-start mb-10 sm:mb-16"
             >
               {(settings.hero?.ctaButtons || []).map((cta, index) => (
                 <Button
@@ -243,13 +243,13 @@ export function Hero() {
               {/* Fallback if no buttons configured */}
               {(!settings.hero?.ctaButtons || settings.hero.ctaButtons.length === 0) && (
                 <>
-                  <Button size="lg" className="rounded-full px-8 py-6 text-base shadow-[0_0_20px_rgba(0,207,200,0.15)] hover:shadow-[0_0_30px_rgba(0,207,200,0.25)] transition-shadow duration-300" asChild>
+                  <Button size="lg" className="rounded-full px-5 py-3 sm:px-6 sm:py-4 md:px-8 md:py-6 text-sm sm:text-base shadow-[0_0_20px_rgba(0,207,200,0.15)] hover:shadow-[0_0_30px_rgba(0,207,200,0.25)] transition-shadow duration-300" asChild>
                     <Link href="/projects">
                       View Projects
                       <ArrowRight className="ml-2 w-4 h-4" />
                     </Link>
                   </Button>
-                  <Button size="lg" variant="outline" className="rounded-full px-8 py-6 text-base bg-white/5 border-white/10 hover:bg-white/10 backdrop-blur-sm" asChild>
+                  <Button size="lg" variant="outline" className="rounded-full px-5 py-3 sm:px-6 sm:py-4 md:px-8 md:py-6 text-sm sm:text-base bg-white/5 border-white/10 hover:bg-white/10 backdrop-blur-sm" asChild>
                     <Link href="/contact">
                       <MessageSquare className="w-4 h-4 mr-2 text-accent" />
                       Contact Me
@@ -262,14 +262,14 @@ export function Hero() {
             {/* Stats Dashboard */}
             <motion.div
               variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}
-              className="grid grid-cols-3 gap-8 md:gap-12 pl-4 border-l border-white/10"
+              className="grid grid-cols-3 gap-4 sm:gap-6 md:gap-12 pl-3 sm:pl-4 border-l border-white/10"
             >
               {(settings.stats || []).slice(0, 3).map((stat, index) => (
-                <div key={stat.id || index} className="flex flex-col gap-1">
-                  <p className="text-3xl lg:text-4xl font-display font-bold text-foreground tracking-tight">
+                <div key={stat.id || index} className="flex flex-col gap-0.5 sm:gap-1">
+                  <p className="text-xl sm:text-2xl lg:text-4xl font-display font-bold text-foreground tracking-tight">
                     {getStatValue(stat, index)}
                   </p>
-                  <p className="text-xs text-muted-foreground uppercase tracking-wider font-medium">
+                  <p className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wider font-medium">
                     {stat.label}
                   </p>
                 </div>
@@ -278,17 +278,17 @@ export function Hero() {
               {/* Fallback if no stats configured */}
               {(!settings.stats || settings.stats.length === 0) && (
                 <>
-                  <div className="flex flex-col gap-1">
-                    <p className="text-3xl lg:text-4xl font-display font-bold text-foreground tracking-tight">10+</p>
-                    <p className="text-xs text-muted-foreground uppercase tracking-wider font-medium">Projects</p>
+                  <div className="flex flex-col gap-0.5 sm:gap-1">
+                    <p className="text-xl sm:text-2xl lg:text-4xl font-display font-bold text-foreground tracking-tight">10+</p>
+                    <p className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wider font-medium">Projects</p>
                   </div>
-                  <div className="flex flex-col gap-1">
-                    <p className="text-3xl lg:text-4xl font-display font-bold text-foreground tracking-tight">3+</p>
-                    <p className="text-xs text-muted-foreground uppercase tracking-wider font-medium">Years</p>
+                  <div className="flex flex-col gap-0.5 sm:gap-1">
+                    <p className="text-xl sm:text-2xl lg:text-4xl font-display font-bold text-foreground tracking-tight">3+</p>
+                    <p className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wider font-medium">Years</p>
                   </div>
-                  <div className="flex flex-col gap-1">
-                    <p className="text-3xl lg:text-4xl font-display font-bold text-foreground tracking-tight">100%</p>
-                    <p className="text-xs text-muted-foreground uppercase tracking-wider font-medium">Success</p>
+                  <div className="flex flex-col gap-0.5 sm:gap-1">
+                    <p className="text-xl sm:text-2xl lg:text-4xl font-display font-bold text-foreground tracking-tight">100%</p>
+                    <p className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wider font-medium">Success</p>
                   </div>
                 </>
               )}

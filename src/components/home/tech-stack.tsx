@@ -172,8 +172,8 @@ function MarqueeRow({ items, category, direction, speed = 40 }: MarqueeRowProps)
       </div>
 
       {/* Gradient Overlays */}
-      <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-background via-background/80 to-transparent z-[5] pointer-events-none" />
-      <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background via-background/80 to-transparent z-[5] pointer-events-none" />
+      <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-24 bg-gradient-to-r from-background via-background/80 to-transparent z-[5] pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-24 bg-gradient-to-l from-background via-background/80 to-transparent z-[5] pointer-events-none" />
 
       {/* Marquee Container */}
       <div
@@ -282,30 +282,106 @@ export function TechStack() {
   }
 
   return (
-    <section className="py-16 lg:py-24 overflow-hidden">
-      <div className="container mx-auto px-6">
+    <section className="py-10 sm:py-16 lg:py-24 overflow-hidden">
+      <div className="container mx-auto px-4 sm:px-6">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-12"
+          className="text-center mb-8 sm:mb-12"
         >
-          <p className="text-xs uppercase tracking-[0.2em] text-accent font-medium mb-3">
+          <p className="text-xs uppercase tracking-[0.2em] text-accent font-medium mb-2 sm:mb-3">
             Technologies
           </p>
-          <h2 className="text-3xl md:text-4xl font-display font-bold tracking-tight">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold tracking-tight">
             Tech Stack
           </h2>
+          <p className="text-sm text-muted-foreground mt-2 max-w-md mx-auto sm:hidden">
+            Tools & technologies I use to build amazing products
+          </p>
         </motion.div>
 
-        {/* Marquee Rows */}
+        {/* Mobile Grid Layout - Visible only on mobile */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="sm:hidden"
+        >
+          {groupedByCategory.map(([category, items], categoryIndex) => (
+            <div key={category} className="mb-6 last:mb-0">
+              {/* Category Header */}
+              <div className="flex items-center gap-3 mb-3">
+                <span className="text-xs uppercase tracking-wider text-accent font-semibold">
+                  {category}
+                </span>
+                <div className="flex-1 h-px bg-gradient-to-r from-accent/30 to-transparent" />
+              </div>
+
+              {/* Tech Items Grid */}
+              <div className="grid grid-cols-2 gap-2.5">
+                {items.map((tech, index) => {
+                  const IconComponent = getIcon(tech.icon);
+                  return (
+                    <motion.div
+                      key={tech.id || tech.name}
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{
+                        duration: 0.3,
+                        delay: categoryIndex * 0.1 + index * 0.05
+                      }}
+                      whileTap={{ scale: 0.98 }}
+                      className="group relative flex items-center gap-2.5 p-3 rounded-xl
+                        bg-gradient-to-br from-secondary/60 to-secondary/30
+                        border border-white/5 hover:border-accent/20
+                        backdrop-blur-sm
+                        transition-all duration-300
+                        active:bg-secondary/80
+                        shadow-sm hover:shadow-md"
+                    >
+                      {/* Subtle gradient overlay */}
+                      <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 
+                        transition-opacity duration-300 
+                        bg-gradient-to-br from-accent/5 via-transparent to-purple-500/5 
+                        pointer-events-none" />
+
+                      {/* Icon Container */}
+                      <div className="relative shrink-0 w-9 h-9 rounded-lg 
+                        bg-gradient-to-br from-accent/20 to-accent/5
+                        flex items-center justify-center
+                        group-hover:from-accent/30 group-hover:to-accent/10
+                        transition-all duration-300">
+                        <IconComponent className="w-4.5 h-4.5 text-accent 
+                          transition-transform duration-300 
+                          group-hover:scale-110" />
+                      </div>
+
+                      {/* Text */}
+                      <span className="relative text-sm font-medium text-foreground/80 
+                        group-hover:text-foreground transition-colors duration-300
+                        truncate">
+                        {tech.name}
+                      </span>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+        </motion.div>
+
+        {/* Desktop Marquee Rows - Hidden on mobile */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
+          className="hidden sm:block"
         >
           {groupedByCategory.map(([category, items], index) => (
             <MarqueeRow
@@ -313,7 +389,7 @@ export function TechStack() {
               items={items}
               category={category}
               direction={index % 2 === 0 ? "right" : "left"}
-              speed={35 + index * 5} // Vary speed slightly per row for visual interest
+              speed={35 + index * 5}
             />
           ))}
         </motion.div>
