@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, Calendar, Clock, Tag, User, Eye, Share2 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
 
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
@@ -207,7 +208,7 @@ export default function BlogDetailPage() {
         className="container mx-auto max-w-3xl px-6 pb-20"
       >
         <div className="prose prose-lg dark:prose-invert prose-headings:font-display prose-headings:font-bold prose-a:text-accent prose-img:rounded-xl max-w-none">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+          <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
             {post.content}
           </ReactMarkdown>
         </div>

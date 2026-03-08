@@ -1,0 +1,12 @@
+UPDATE certifications SET "issuerLogo" = 'https://res.cloudinary.com/dmxqlab0i/image/upload/v1772268367/portfolio/logos/alibaba-cloud.jpg', "updatedAt" = NOW() WHERE issuer IN ('Alibaba Cloud', 'Alibaba Cloud (Apsara Clouder)', 'Alibaba Cloud / ADSE');
+UPDATE certifications SET "issuerLogo" = 'https://res.cloudinary.com/dmxqlab0i/image/upload/v1772268370/portfolio/logos/google-cloud.png', "updatedAt" = NOW() WHERE issuer IN ('Google Cloud');
+UPDATE certifications SET "issuerLogo" = 'https://res.cloudinary.com/dmxqlab0i/image/upload/v1772268368/portfolio/logos/codepolitan.png', "updatedAt" = NOW() WHERE issuer IN ('Codepolitan');
+UPDATE certifications SET "issuerLogo" = 'https://res.cloudinary.com/dmxqlab0i/image/upload/v1772268369/portfolio/logos/dicoding.png', "updatedAt" = NOW() WHERE issuer IN ('Dicoding Indonesia');
+UPDATE certifications SET "issuerLogo" = 'https://res.cloudinary.com/dmxqlab0i/image/upload/v1772268372/portfolio/logos/ibm.png', "updatedAt" = NOW() WHERE issuer IN ('IBM (Cognitive Class)');
+UPDATE certifications SET "issuerLogo" = 'https://res.cloudinary.com/dmxqlab0i/image/upload/v1772268373/portfolio/logos/sanbercode.png', "updatedAt" = NOW() WHERE issuer IN ('Sanbercode');
+UPDATE certifications SET "issuerLogo" = 'https://res.cloudinary.com/dmxqlab0i/image/upload/v1772268375/portfolio/logos/revou.png', "updatedAt" = NOW() WHERE issuer IN ('RevoU');
+UPDATE certifications SET "issuerLogo" = 'https://res.cloudinary.com/dmxqlab0i/image/upload/v1772268374/portfolio/logos/stmik-jabar.png', "updatedAt" = NOW() WHERE issuer IN ('STMIK Jabar', 'LPPM STMIK Jabar', 'HIMATIF STMIK Jabar', 'BEM STMIK Jabar', 'HIMASI STMIK Jabar', 'HIMASI');
+UPDATE certifications SET "issuerLogo" = 'https://res.cloudinary.com/dmxqlab0i/image/upload/v1772268377/portfolio/logos/jda.png', "updatedAt" = NOW() WHERE issuer IN ('JDA');
+UPDATE certifications SET "issuerLogo" = 'https://res.cloudinary.com/dmxqlab0i/image/upload/v1772268379/portfolio/logos/seminar.png', "updatedAt" = NOW() WHERE issuer IN ('Seminar Nasional', 'Seminar Internasional');
+UPDATE certifications SET "issuerLogo" = 'https://res.cloudinary.com/dmxqlab0i/image/upload/v1772268376/portfolio/logos/itts.png', "updatedAt" = NOW() WHERE issuer IN ('Institut Teknologi Tangerang Selatan');
+UPDATE certifications SET "issuerLogo" = 'https://res.cloudinary.com/dmxqlab0i/image/upload/v1772268380/portfolio/logos/default.png', "updatedAt" = NOW() WHERE issuer IN ('Unknown');
